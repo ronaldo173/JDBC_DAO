@@ -10,7 +10,7 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
-import ua.mycompany.ronaldo173.entity.Group;
+import ua.mycompany.ronaldo173.domain.Group;
 
 /**
  * @author Alexandr Efimov
@@ -23,14 +23,15 @@ public class MySqlGroupDaoTest {
 	 * {@link ua.mycompany.ronaldo173.dao.MySqlGroupDao#getAll()}.
 	 * 
 	 * @throws SQLException
+	 * @throws PersistException 
 	 */
 	@Test
-	public void testGetAll() throws SQLException {
+	public void testGetAll() throws SQLException, PersistException {
 		DaoFactory daoFactory = new MySqlDaoFactory();
 		List<Group> list;
 
-		try (Connection connection = daoFactory.geConnection()) {
-			GroupDao dao = daoFactory.getGroupDao(connection);
+		try (Connection connection = (Connection) daoFactory.getContext()) {
+			GroupDao dao = (GroupDao) daoFactory.getDao(connection, Group.class);
 			list = dao.getAll();
 		}
 

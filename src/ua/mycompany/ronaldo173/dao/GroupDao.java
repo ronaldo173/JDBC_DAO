@@ -3,7 +3,7 @@ package ua.mycompany.ronaldo173.dao;
 import java.sql.SQLException;
 import java.util.List;
 
-import ua.mycompany.ronaldo173.entity.Group;
+import ua.mycompany.ronaldo173.domain.Group;
 
 public interface GroupDao {
 

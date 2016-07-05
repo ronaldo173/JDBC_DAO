@@ -1,14 +1,12 @@
 package ua.mycompany.ronaldo173.dao;
 
-import java.sql.Connection;
-import java.sql.SQLException;
+public interface DaoFactory<Context> {
 
-public interface DaoFactory {
+	interface DaoCreator<Context> {
+		GenericDao create(Context context);
+	}
 
-	Connection geConnection() throws SQLException;
+	Context getContext() throws PersistException;
 
-	GroupDao getGroupDao(Connection connection);
-
-	StudentDao getStudentDao(Connection connection);
-
+	GenericDao getDao(Context context, Class dtoClass) throws PersistException;
 }

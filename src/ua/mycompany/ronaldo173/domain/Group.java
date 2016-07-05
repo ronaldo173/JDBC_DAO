@@ -1,16 +1,11 @@
-package ua.mycompany.ronaldo173.entity;
+package ua.mycompany.ronaldo173.domain;
 
-public class Group {
-	private int id;
+import ua.mycompany.ronaldo173.dao.Identified;
+
+public class Group implements Identified<Integer> {
+	private Integer id;
 	private int number;
 	private String department;
-
-	/**
-	 * @return the id
-	 */
-	public int getId() {
-		return id;
-	}
 
 	/**
 	 * @param id
@@ -50,7 +45,9 @@ public class Group {
 		this.department = department;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
@@ -65,7 +62,10 @@ public class Group {
 		builder.append("]");
 		return builder.toString();
 	}
-	
-	
+
+	@Override
+	public Integer getId() {
+		return id;
+	}
 
 }

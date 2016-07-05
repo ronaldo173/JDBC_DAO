@@ -42,8 +42,10 @@ public abstract class AbstractJDBCDAO<T extends Identified<PK>, PK extends Seria
 	/**
 	 * –азбирает ResultSet и возвращает список объектов соответствующих
 	 * содержимому ResultSet.
+	 * 
+	 * @throws PersistException
 	 */
-	protected abstract List<T> parseResSet(ResultSet rs);
+	protected abstract List<T> parseResSet(ResultSet rs) throws PersistException;
 
 	/**
 	 * ”станавливает аргументы update запроса в соответствии со значением полей

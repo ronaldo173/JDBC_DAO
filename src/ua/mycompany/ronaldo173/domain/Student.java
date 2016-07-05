@@ -1,8 +1,10 @@
-package ua.mycompany.ronaldo173.entity;
+package ua.mycompany.ronaldo173.domain;
 
 import java.util.Date;
 
-public class Student {
+import ua.mycompany.ronaldo173.dao.Identified;
+
+public class Student implements Identified<Integer> {
 	private Integer id;
 	private String name;
 	private String surName;
