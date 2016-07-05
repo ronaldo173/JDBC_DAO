@@ -26,8 +26,8 @@ public class MySqlGroupDao extends AbstractJDBCDAO<Group, Integer> {
 
 	@Override
 	public Group create() throws PersistException {
-		// TODO Auto-generated method stub
-		return null;
+		Group g = new Group();
+		return persist(g);
 	}
 
 	@Override
@@ -37,17 +37,17 @@ public class MySqlGroupDao extends AbstractJDBCDAO<Group, Integer> {
 
 	@Override
 	public String getCreateQuery() {
-		return null;
+		return "INSERT INTO daotalk.Group (number, department) \n" + "VALUES (?, ?);";
 	}
 
 	@Override
 	public String getUpdateQuery() {
-		return null;
+		return "UPDATE daotalk.Group SET number= ?, department = ? WHERE id= ?;";
 	}
 
 	@Override
 	public String getDeleteQuery() {
-		return null;
+		return "DELETE FROM daotalk.Group WHERE id= ?;";
 	}
 
 	@Override
@@ -70,20 +70,25 @@ public class MySqlGroupDao extends AbstractJDBCDAO<Group, Integer> {
 	}
 
 	@Override
-	protected void prepareStForUpdateSetArgs(PreparedStatement statement, Group object) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	protected void prepareStForDeleteSetArgs(PreparedStatement statement, Group object) {
-		// TODO Auto-generated method stub
+	protected void prepareStForUpdateSetArgs(PreparedStatement statement, Group object) throws PersistException {
+		try {
+			statement.setInt(1, object.getNumber());
+			statement.setString(2, object.getDepartment());
+			statement.setInt(3, object.getId());
+		} catch (Exception e) {
+			throw new PersistException(e);
+		}
 
 	}
 
 	@Override
 	protected void prepareStatementForInsert(PreparedStatement statement, Group object) throws PersistException {
-		// TODO Auto-generated method stub
+		try {
+			statement.setInt(1, object.getNumber());
+			statement.setString(2, object.getDepartment());
+		} catch (Exception e) {
+			throw new PersistException(e);
+		}
 
 	}
 

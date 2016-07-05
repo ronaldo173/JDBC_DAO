@@ -5,85 +5,50 @@ import java.util.Date;
 import ua.mycompany.ronaldo173.dao.Identified;
 
 public class Student implements Identified<Integer> {
-	private Integer id;
+
+	private Integer id = null;
 	private String name;
-	private String surName;
+	private String surname;
 	private Date enrolmentDate;
 	private Integer groupId;
 
-	/**
-	 * @return the id
-	 */
 	public Integer getId() {
 		return id;
 	}
 
-	/**
-	 * @param id
-	 *            the id to set
-	 */
-	public void setId(Integer id) {
+	protected void setId(int id) {
 		this.id = id;
 	}
 
-	/**
-	 * @return the name
-	 */
 	public String getName() {
 		return name;
 	}
 
-	/**
-	 * @param name
-	 *            the name to set
-	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
-	/**
-	 * @return the surName
-	 */
-	public String getSurName() {
-		return surName;
+	public String getSurname() {
+		return surname;
 	}
 
-	/**
-	 * @param surName
-	 *            the surName to set
-	 */
-	public void setSurName(String surName) {
-		this.surName = surName;
+	public void setSurname(String surname) {
+		this.surname = surname;
 	}
 
-	/**
-	 * @return the enrolmentDate
-	 */
 	public Date getEnrolmentDate() {
 		return enrolmentDate;
 	}
 
-	/**
-	 * @param enrolmentDate
-	 *            the enrolmentDate to set
-	 */
 	public void setEnrolmentDate(Date enrolmentDate) {
 		this.enrolmentDate = enrolmentDate;
 	}
 
-	/**
-	 * @return the groupId
-	 */
 	public Integer getGroupId() {
 		return groupId;
 	}
 
-	/**
-	 * @param groupId
-	 *            the groupId to set
-	 */
 	public void setGroupId(Integer groupId) {
 		this.groupId = groupId;
 	}
-
 }

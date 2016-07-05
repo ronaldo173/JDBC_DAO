@@ -59,8 +59,7 @@ public class MySqlDaoFactory implements DaoFactory<Connection> {
 
 			@Override
 			public GenericDao create(Connection connection) {
-				// TODO
-				return null;
+				return new MySqlStudentDao(connection);
 			}
 		});
 	}

@@ -50,14 +50,10 @@ public abstract class AbstractJDBCDAO<T extends Identified<PK>, PK extends Seria
 	/**
 	 * Устанавливает аргументы update запроса в соответствии со значением полей
 	 * объекта object.
+	 * 
+	 * @throws PersistException
 	 */
-	protected abstract void prepareStForUpdateSetArgs(PreparedStatement statement, T object);
-
-	/**
-	 * Устанавливает аргументы Delete запроса в соответствии со значением полей
-	 * объекта object.
-	 */
-	protected abstract void prepareStForDeleteSetArgs(PreparedStatement statement, T object);
+	protected abstract void prepareStForUpdateSetArgs(PreparedStatement statement, T object) throws PersistException;
 
 	/**
 	 * Устанавливает аргументы insert запроса в соответствии со значением полей
@@ -67,23 +63,22 @@ public abstract class AbstractJDBCDAO<T extends Identified<PK>, PK extends Seria
 
 	@Override
 	public T getByPK(int key) throws PersistException {
-		List<T> list = null;
+		List<T> list;
 		String sql = getSelectQuery();
-		sql += "WHERE id = ?";
-
+		sql += " WHERE id = ?";
 		try (PreparedStatement statement = connection.prepareStatement(sql)) {
 			statement.setInt(1, key);
-
-			ResultSet resultSet = statement.executeQuery();
-			list = parseResSet(resultSet);
-		} catch (SQLException e) {
+			ResultSet rs = statement.executeQuery();
+			list = parseResSet(rs);
+		} catch (Exception e) {
 			throw new PersistException(e);
 		}
-
-		if (list.size() > 1) {
-			throw new PersistException("Received more that 1 record!");
+		if (list == null || list.size() == 0) {
+			return null;
 		}
-
+		if (list.size() > 1) {
+			throw new PersistException("Received more than one record.");
+		}
 		return list.iterator().next();
 	}
 
@@ -121,7 +116,11 @@ public abstract class AbstractJDBCDAO<T extends Identified<PK>, PK extends Seria
 		String sql = getDeleteQuery();
 
 		try (PreparedStatement statement = connection.prepareStatement(sql)) {
-			prepareStForDeleteSetArgs(statement, object);
+			try {
+				statement.setObject(1, object.getId());
+			} catch (Exception e) {
+				throw new PersistException(e);
+			}
 			int count = statement.executeUpdate();
 			if (count != 1) {
 				throw new PersistException("On update modify more then 1 rec: " + count);
@@ -156,7 +155,7 @@ public abstract class AbstractJDBCDAO<T extends Identified<PK>, PK extends Seria
 			throw new PersistException(e);
 		}
 
-		sql = getSelectQuery() + "WHERE id = last_insert_id();";
+		sql = getSelectQuery() + " WHERE id = last_insert_id();";
 		try (PreparedStatement statement = connection.prepareStatement(sql)) {
 			ResultSet rs = statement.executeQuery();
 			List<T> list = parseResSet(rs);
