@@ -14,8 +14,6 @@ public class MySqlDaoFactory implements DaoFactory {
 
 	@Override
 	public Connection geConnection() throws SQLException {
-		System.out.println(user);
-		System.out.println(password);
 		return DriverManager.getConnection(url, user, password);
 	}
 
